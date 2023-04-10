@@ -1,18 +1,18 @@
 export type TImage = {
-  src: string,
-  alt: string,
+  src: string
+  alt: string
 }
 
 export interface ICard {
-  icon: string,
-  title: string,
+  icon: string
+  title: string
   description: string
 }
 
 export interface IAlumniCard {
-  image: TImage,
-  title: string,
-  description: string,
+  image: TImage
+  title: string
+  description: string
 }
 
 export const cardData: Array<ICard> = [
@@ -24,27 +24,27 @@ export const cardData: Array<ICard> = [
   {
     icon: 'mdi:creation',
     title: 'UI/UX Design',
-    description: 'Learn how to design UI/UX before code an app',
+    description: 'Learn how to design UI/UX before code an app'
   },
   {
     icon: 'mdi:android',
     title: 'Android Development',
     description: 'Learn how to develop an Android App with Java/Kotlin'
   }
-];
+]
 
 export const alumniCardData: Array<IAlumniCard> = [
   {
     image: {
-      src: 'images/person/man.webp',
-      alt: 'john doe',
+      src: '@/assets/images/person/man.webp',
+      alt: 'john doe'
     },
     title: 'John Doe',
     description: 'I Love all mentor, They are humble'
   },
   {
     image: {
-      src: 'images/person/teen.webp',
+      src: '@/assets/images/person/teen.webp',
       alt: 'hilmy'
     },
     title: 'Hilmy',
@@ -52,10 +52,10 @@ export const alumniCardData: Array<IAlumniCard> = [
   },
   {
     image: {
-      src: 'images/person/women.webp',
+      src: '@/assets/images/person/women.webp',
       alt: 'Alexander'
     },
     title: 'Alexander',
     description: 'I Really love UI/UX Desgin classes'
-  },
-] 
+  }
+]

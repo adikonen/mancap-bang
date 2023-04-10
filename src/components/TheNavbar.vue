@@ -1,6 +1,34 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import { navlinkData } from '@/_data/nav'
+import { Icon } from '@iconify/vue'
+import { router } from '@/router'
+import BenefitList from '@/components/BenefitList.vue'
+import { useDark } from '@/stores/dark'
+interface INav {
+  route: string
+  text: string
+  icon: string
+  isActive?: boolean
+}
+
+const open = ref(false)
+
+const navlinkData: Array<INav> = [
+  {
+    route: '/',
+    text: 'home',
+    icon: 'mdi:home',
+    isActive: router.currentRoute.value.path == '/'
+  },
+  {
+    route: '#',
+    text: 'Register',
+    icon: 'mdi:door-open',
+    isActive: router.currentRoute.value.path == '/register'
+  }
+]
+const darkStore = useDark()
 </script>
 
 <template>
@@ -18,6 +46,7 @@ import { navlinkData } from '@/_data/nav'
         class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         aria-controls="navbar-default"
         aria-expanded="false"
+        @click="open = !open"
       >
         <span class="sr-only">Open main menu</span>
         <svg
@@ -39,12 +68,34 @@ import { navlinkData } from '@/_data/nav'
           class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
         >
           <template v-for="link in navlinkData">
-            <RouterLink :to="link.route" class="nav-link nav-link__nonactive capitalize">
-              {{ link.text }}
-            </RouterLink>
+            <li>
+              <RouterLink
+                :to="link.route"
+                :class="[
+                  'nav-link nav-link__nonactive capitalize',
+                  { 'text-primary': link.isActive }
+                ]"
+              >
+                {{ link.text }}
+              </RouterLink>
+            </li>
           </template>
+          <li>
+            <button title="toggle dark mode" @click="darkStore.toggle()">
+              <Icon icon="mdi:theme-light-dark" height="30"></Icon>
+            </button>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
+  <div class="block md:hidden dark:bg-gray-900 px-4 pb-8" v-show="open">
+    <template v-for="link in navlinkData" :key="link.route">
+      <BenefitList :icon="link.icon" text="Home">
+        <RouterLink :to="link.route" class="block font-bold capitalize">
+          {{ link.text }} <span v-if="link.isActive">(current)</span>
+        </RouterLink>
+      </BenefitList>
+    </template>
+  </div>
 </template>
